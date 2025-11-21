@@ -2,10 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from ellabs import elevenlabs_tts, elevenlabs_stt
 from mangum import Mangum
-from fastapi.responses import JSONResponse, Response
-import base64
+from fastapi.responses import JSONResponse
 import os
-import io
 from dotenv import load_dotenv
 from elevenlabs import ElevenLabs
 
@@ -26,19 +24,10 @@ class Model(BaseModel):
 
 @app.post("/text-to-speech")
 async def choose(payload: Model):
-    if payload.text.strip():
-        audio_bytes = elevenlabs_tts(payload.text)
-
-        return Response(
-            content=audio_bytes,
-            media_type="audio/mpeg",
-            headers={
-                "Content-Length": str(len(audio_bytes)),
-                "Content-Disposition": "inline; filename=speech.mp3"
-            }
-        )
-
-    return {"error": "Text must be added."}
+    if payload.text != "":
+        return elevenlabs_tts(payload.text)
+    else:
+        return {"error": "Text must be added."}
 
 @app.post("/speech-to-text")
 async def select(payload: Model):
