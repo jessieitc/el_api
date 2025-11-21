@@ -1,0 +1,6 @@
+/.aws-sam
+/.venv
+/env.json
+/recording.wav
+/template.yaml
+/__pycache__
