@@ -17,30 +17,34 @@ elevenlabs = ElevenLabs(
 
 def elevenlabs_tts(text: str):
     # Perform the text-to-speech conversion
-    response = elevenlabs.text_to_speech.stream(
-        voice_id="pNInz6obpgDQGcFmaJgB", # Adam pre-made voice
-        output_format="mp3_22050_32",
-        text=text,
-        model_id="eleven_multilingual_v2",
+    try:
+        response = elevenlabs.text_to_speech.stream(
+            voice_id="pNInz6obpgDQGcFmaJgB", # Adam pre-made voice
+            output_format="mp3_22050_32",
+            input={"text": text},
+            model_id="eleven_multilingual_v2",
         # Optional voice settings that allow you to customize the output
-        voice_settings=VoiceSettings(
-            stability=0.0,
-            similarity_boost=1.0,
-            style=0.0,
-            use_speaker_boost=True,
-            speed=1.0,
+            voice_settings=VoiceSettings(
+                stability=0.0,
+                similarity_boost=1.0,
+                style=0.0,
+                use_speaker_boost=True,
+                speed=1.0,
         ),
     )
 
     # Collect all audio chunks into a single byte array
-    audio_bytes = io.BytesIO()
-    for chunk in response:
-        audio_bytes.write(chunk)
+        audio_bytes = io.BytesIO()
+        for chunk in response:
+            audio_bytes.write(chunk)
 
-    return audio_bytes.getvalue()
+        return audio_bytes.getvalue()
     # Return the stream
     #return StreamingResponse(response, media_type="audio/mp3")
-
+    except Exception as e:
+        # print the real ElevenLabs error
+        print("🔥 ElevenLabs TTS ERROR:", e)
+        raise
 
 def elevenlabs_stt():
     audio_file_path = "kwame1.m4a"
