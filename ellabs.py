@@ -32,8 +32,13 @@ def elevenlabs_tts(text: str):
         ),
     )
 
+    # Collect the entire audio into memory
+    audio_bytes = b"".join(chunk for chunk in response)
+
+    return audio_bytes
     # Return the stream
-    return StreamingResponse(response, media_type="audio/mp3")
+    #return StreamingResponse(response, media_type="audio/mp3")
+
 
 def elevenlabs_stt():
     audio_file_path = "kwame1.m4a"
