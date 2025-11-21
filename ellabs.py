@@ -43,7 +43,7 @@ def elevenlabs_tts(text: str):
 
 
 def elevenlabs_stt():
-    audio_file_path = "kwame4.m4a"
+    audio_file_path = "kwame1.m4a"
 
     # Open the file in binary read mode and read its content
     with open(audio_file_path, "rb") as audio_file:
