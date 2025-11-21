@@ -21,7 +21,7 @@ def elevenlabs_tts(text: str):
         response = elevenlabs.text_to_speech.stream(
             voice_id="pNInz6obpgDQGcFmaJgB", # Adam pre-made voice
             output_format="mp3_22050_32",
-            input={"text": text},
+            text=text,
             model_id="eleven_multilingual_v2",
         # Optional voice settings that allow you to customize the output
             voice_settings=VoiceSettings(
